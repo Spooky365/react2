@@ -1,0 +1,49 @@
+# Name for your GitHub Actions workflow
+name: Build and Push Docker Image (Final Version)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-push-final:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # --- THIS IS THE FINAL, CORRECTED VERSION OF THE METADATA STEP ---
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          #
+          # !!! IMPORTANT: CUSTOMIZE THIS LINE !!!
+          #
+          images: skoopy365/react2
+
+          # This tagging strategy is robust and will work on push events.
+          tags: |
+            # type=raw allows us to use the 'date' function on any event.
+            # This is the correct way to get a timestamp on a push.
+            type=raw,value={{date 'YYYYMMDD-HHmmss'}}
+
+            # We are adding back the other two useful tags now that we've solved the main problem.
+           # type=ref,event=branch
+           # type=sha,format=short
+
+      # This step remains the same.
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
