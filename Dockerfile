@@ -24,7 +24,7 @@ FROM nginx:1.25-alpine
 
 # Copy the custom NGINX configuration we created
 # This will overwrite the default NGINX config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+#COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the built static files from the "builder" stage
 # This is the magic of multi-stage builds! We only copy the build output.
