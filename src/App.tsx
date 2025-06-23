@@ -20,7 +20,8 @@ import {
   Phone
 } from 'lucide-react';
 
-const APP_VERSION = "v1.1.0"; 
+// I see you've updated the version, great practice!
+const APP_VERSION = "v1.1.1"; 
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,6 +34,9 @@ function App() {
     project: 'Linux Server Setup',
     message: ''
   });
+  
+  // NEU: State to handle form submission status for user feedback
+  const [formStatus, setFormStatus] = useState(''); // '', 'sending', 'success', 'error'
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,7 +46,40 @@ function App() {
     }));
   };
 
-  // The JavaScript submit handler has been removed to allow native browser submission.
+  // NEU: JavaScript handler to submit the form to our own backend
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); // Prevent the browser's default form submission
+    setFormStatus('sending');
+
+    try {
+      // The endpoint is now a relative path to our own server.js API
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setFormStatus('success');
+        // Clear the form on successful submission
+        setFormData({
+          name: '',
+          email: '',
+          project: 'Linux Server Setup',
+          message: '',
+        });
+      } else {
+        // Handle server-side errors
+        setFormStatus('error');
+      }
+    } catch (error) {
+      // Handle network errors
+      console.error('Submission error:', error);
+      setFormStatus('error');
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -62,7 +99,7 @@ function App() {
     return () => sections.forEach((section) => observer.unobserve(section));
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -377,15 +414,8 @@ function App() {
           <div className="flex justify-center">
             <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 w-full max-w-xl">
               
-              <form 
-                action="https://fncontact.com/api/send/GDQW" 
-                method="POST" 
-                className="space-y-6"
-              >
-                
-                <input type="text" name="_gotcha" tabIndex="-1" autoComplete="off" className="hidden" />
-                <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
-
+              {/* GEÄNDERT: Formular verwendet jetzt den JavaScript-Handler */}
+              <form onSubmit={handleFormSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                     Name
@@ -457,11 +487,23 @@ function App() {
                 <div>
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-105"
+                    disabled={formStatus === 'sending'}
+                    className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Nachricht senden
+                    {formStatus === 'sending' ? 'Wird gesendet...' : 'Nachricht senden'}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </button>
+
+                  {formStatus === 'success' && (
+                    <p className="text-green-400 mt-4 text-center">
+                      Vielen Dank! Ihre Nachricht wurde sicher verschlüsselt gesendet.
+                    </p>
+                  )}
+                  {formStatus === 'error' && (
+                    <p className="text-red-400 mt-4 text-center">
+                      Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.
+                    </p>
+                  )}
                 </div>
               </form>
             </div>
