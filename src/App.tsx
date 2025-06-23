@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 
 // I see you've updated the version, great practice!
-const APP_VERSION = "v1.1.3"; 
+const APP_VERSION = "v1.1.4"; 
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -523,7 +523,7 @@ function App() {
             
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
               <div className="text-gray-400 text-sm text-center sm:text-right">
-                © 2024 Falk Solutions. Alle Rechte vorbehalten.
+                © 2025 Falk Solutions. Alle Rechte vorbehalten.
               </div>
               <div className="text-gray-500 text-sm">
                 {APP_VERSION}
