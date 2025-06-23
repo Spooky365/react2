@@ -19,7 +19,7 @@ import {
   Power,
   TrendingUp,
   Smile,
-  Phone // Telefon-Icon importiert
+  Phone
 } from 'lucide-react';
 
 function App() {
@@ -76,12 +76,14 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
       {/* Navigation */}
+      {/* GEÄNDERT: Höhe der Navigationsleiste reduziert */}
       <nav className="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-12"> {/* Höhe von h-16 auf h-12 reduziert */}
             <div className="flex items-center space-x-2">
-              <Terminal className="h-8 w-8 text-cyan-400" />
-              <span className="text-xl font-bold text-white">Falk Solutions</span>
+              {/* Logo und Textgröße für die neue Höhe angepasst */}
+              <Terminal className="h-6 w-6 text-cyan-400" />
+              <span className="text-lg font-bold text-white">Falk Solutions</span>
             </div>
             
             <div className="hidden md:flex items-center space-x-8">
@@ -173,11 +175,12 @@ function App() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </button>
               
+              {/* GEÄNDERT: Buttontext und onClick-Funktion */}
               <button 
-                onClick={() => scrollToSection('services')}
+                onClick={() => scrollToSection('projects')}
                 className="inline-flex items-center px-8 py-4 bg-slate-800/80 text-white font-semibold rounded-lg hover:bg-slate-700 transition-all border border-slate-600"
               >
-                Services entdecken
+                Projekt-Highlight
               </button>
             </div>
           </div>
@@ -253,7 +256,6 @@ function App() {
               </div>
               
               <div className="mt-8 grid grid-cols-2 gap-6">
-                {/* GEÄNDERT: Inhalt und Animation hinzugefügt */}
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
                   <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
                     24/7
@@ -262,7 +264,6 @@ function App() {
                   <div className="text-sm text-gray-400">Erreichbar</div>
                 </div>
                 
-                {/* GEÄNDERT: Animation hinzugefügt */}
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
                   <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
                     100% 
@@ -273,7 +274,6 @@ function App() {
               </div>
             </div>
             
-            {/* GEÄNDERT: Animation hinzugefügt */}
             <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
               <h3 className="text-xl font-bold text-white mb-6">Expertise</h3>
               
@@ -313,7 +313,6 @@ function App() {
           </div>
           
           <div className="flex justify-center">
-            {/* GEÄNDERT: Animation hinzugefügt */}
             <div className="max-w-4xl w-full bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 hover:border-cyan-500/50 transition-all hover:transform hover:scale-105">
               <h3 className="text-2xl font-bold text-white mb-4">
                 Vollautomatisierte CI/CD-Pipeline für eine React Webapp
