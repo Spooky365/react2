@@ -64,13 +64,13 @@ function App() {
       icon: <Cloud className="h-8 w-8" />,
       title: "Cloud DevOps",
       description: "Moderne Cloud-Infrastrukturen mit CI/CD-Pipelines, Container-Orchestrierung und Automatisierung.",
-      features: ["AWS/Azure/GCP", "Docker & Kubernetes", "Infrastructure as Code", "CI/CD Pipelines"]
+      features: ["Cloud Providers (AWS, OCI, ...)", "Docker & Kubernetes", "Infrastructure as Code", "FluxCD / ArgoCD / Github Actions"]
     },
     {
       icon: <Terminal className="h-8 w-8" />,
       title: "Automation & Scripting",
       description: "Prozessautomatisierung durch intelligente Skripte und moderne DevOps-Tools.",
-      features: ["Bash/Python/Ansible", "Task Automation", "System Monitoring", "Log Management"]
+      features: ["Ansible / Bash / Python", "Task Automation", "System Monitoring", "Log Management"]
     }
   ];
 
