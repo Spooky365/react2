@@ -18,7 +18,8 @@ import {
   GitFork,
   Power,
   TrendingUp,
-  Smile 
+  Smile,
+  Phone // Telefon-Icon importiert
 } from 'lucide-react';
 
 function App() {
@@ -252,12 +253,17 @@ function App() {
               </div>
               
               <div className="mt-8 grid grid-cols-2 gap-6">
-                <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
-                  <div className="text-2xl font-bold text-cyan-400 mb-1">50+</div>
-                  <div className="text-sm text-gray-400">Individuelle Lösungen</div>
+                {/* GEÄNDERT: Inhalt und Animation hinzugefügt */}
+                <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
+                  <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
+                    24/7
+                    <Phone className="ml-2 h-6 w-6" />
+                  </div>
+                  <div className="text-sm text-gray-400">Erreichbar</div>
                 </div>
                 
-                <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
+                {/* GEÄNDERT: Animation hinzugefügt */}
+                <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
                   <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
                     100% 
                     <Smile className="ml-2 h-6 w-6" />
@@ -267,7 +273,8 @@ function App() {
               </div>
             </div>
             
-            <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700/50">
+            {/* GEÄNDERT: Animation hinzugefügt */}
+            <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
               <h3 className="text-xl font-bold text-white mb-6">Expertise</h3>
               
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
@@ -306,7 +313,8 @@ function App() {
           </div>
           
           <div className="flex justify-center">
-            <div className="max-w-4xl w-full bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 hover:border-cyan-500/50 transition-all">
+            {/* GEÄNDERT: Animation hinzugefügt */}
+            <div className="max-w-4xl w-full bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 hover:border-cyan-500/50 transition-all hover:transform hover:scale-105">
               <h3 className="text-2xl font-bold text-white mb-4">
                 Vollautomatisierte CI/CD-Pipeline für eine React Webapp
               </h3>
