@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Server, 
-  Shield, 
   Cloud, 
   Code, 
-  Users, 
   Mail, 
-  Phone, 
   MapPin, 
-  Github, 
-  Linkedin, 
   CheckCircle,
   Menu,
   X,
   ArrowRight,
   Terminal,
   Database,
-  Settings,
   Zap,
   Globe,
   Lock,
@@ -73,28 +67,10 @@ function App() {
       features: ["AWS/Azure/GCP", "Docker & Kubernetes", "Infrastructure as Code", "CI/CD Pipelines"]
     },
     {
-      icon: <Shield className="h-8 w-8" />,
-      title: "Security & Compliance",
-      description: "Comprehensive Sicherheitslösungen und Compliance-Strategien für Ihre IT-Infrastruktur.",
-      features: ["Penetration Testing", "SSL/TLS Setup", "Firewall-Konfiguration", "Compliance Audits"]
-    },
-    {
-      icon: <Database className="h-8 w-8" />,
-      title: "Database Management",
-      description: "Optimierung und Verwaltung von Datenbanksystemen mit Fokus auf Performance und Skalierbarkeit.",
-      features: ["MySQL/PostgreSQL", "Redis/MongoDB", "Backup & Recovery", "Performance Tuning"]
-    },
-    {
       icon: <Terminal className="h-8 w-8" />,
       title: "Automation & Scripting",
       description: "Prozessautomatisierung durch intelligente Skripte und moderne DevOps-Tools.",
       features: ["Bash/Python/Ansible", "Task Automation", "System Monitoring", "Log Management"]
-    },
-    {
-      icon: <Settings className="h-8 w-8" />,
-      title: "System Integration",
-      description: "Nahtlose Integration verschiedener Systeme und Dienste für optimale Workflows.",
-      features: ["API Integration", "Service Mesh", "Load Balancing", "High Availability"]
     }
   ];
 
@@ -116,27 +92,6 @@ function App() {
       description: "GDPR-konforme Datenverarbeitungsplattform mit automatisierter Backup-Strategie",
       tech: ["Linux", "Python", "Elasticsearch", "Grafana"],
       impact: "Vollständige Compliance-Erfüllung"
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: "Dr. Sarah Weber",
-      company: "TechHealth GmbH",
-      text: "Falk hat unsere gesamte IT-Infrastruktur modernisiert. Seine Expertise in DevOps und Linux-Administration ist beeindruckend.",
-      rating: 5
-    },
-    {
-      name: "Marcus Schmidt",
-      company: "FinanceFlow AG",
-      text: "Professionelle Arbeit, termingerecht und mit exzellenter Kommunikation. Unsere Server laufen jetzt perfekt.",
-      rating: 5
-    },
-    {
-      name: "Lisa Chen",
-      company: "DataDrive Solutions",
-      text: "Die Automatisierung unserer Deployment-Prozesse hat uns Wochen an Arbeit gespart. Absolute Empfehlung!",
-      rating: 5
     }
   ];
 
@@ -254,7 +209,7 @@ function App() {
               Meine Services
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Comprehensive DevOps-Lösungen für moderne Unternehmen
+              Umfassende DevOps-Lösungen für moderne Unternehmen
             </p>
           </div>
           
@@ -396,44 +351,6 @@ function App() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Was Kunden sagen
-            </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Erfahrungen und Feedback von zufriedenen Kunden
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={index}
-                className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8"
-              >
-                <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <div key={i} className="w-5 h-5 text-yellow-400">★</div>
-                  ))}
-                </div>
-                
-                <p className="text-gray-300 mb-6 italic">
-                  "{testimonial.text}"
-                </p>
-                
-                <div>
-                  <div className="font-semibold text-white">{testimonial.name}</div>
-                  <div className="text-sm text-gray-400">{testimonial.company}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/50">
         <div className="max-w-7xl mx-auto">
@@ -458,17 +375,7 @@ function App() {
                     <p className="text-gray-300">kontakt@falk-solutions.de</p>
                   </div>
                 </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
-                    <Phone className="h-6 w-6 text-cyan-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Telefon</h3>
-                    <p className="text-gray-300">+49 (0) 123 456 7890</p>
-                  </div>
-                </div>
-                
+                                
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
                     <MapPin className="h-6 w-6 text-cyan-400" />
@@ -477,24 +384,6 @@ function App() {
                     <h3 className="text-lg font-semibold text-white mb-2">Standort</h3>
                     <p className="text-gray-300">Deutschland (Remote verfügbar)</p>
                   </div>
-                </div>
-              </div>
-              
-              <div className="mt-12">
-                <h3 className="text-lg font-semibold text-white mb-4">Folgen Sie mir</h3>
-                <div className="flex space-x-4">
-                  <a 
-                    href="#" 
-                    className="w-12 h-12 bg-slate-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-slate-600 transition-colors"
-                  >
-                    <Github className="h-6 w-6" />
-                  </a>
-                  <a 
-                    href="#" 
-                    className="w-12 h-12 bg-slate-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-slate-600 transition-colors"
-                  >
-                    <Linkedin className="h-6 w-6" />
-                  </a>
                 </div>
               </div>
             </div>
@@ -582,5 +471,5 @@ function App() {
     </div>
   );
 }
-
+ 
 export default App;
