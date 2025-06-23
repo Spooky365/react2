@@ -1,5 +1,5 @@
 # Name for your GitHub Actions workflow
-name: Build and Push Docker Image (Final Version)
+name: Build and Push Docker Image (Optimized)
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-push-final:
+  build-and-push: # Renamed for clarity
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -19,33 +19,31 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # --- THIS IS THE FINAL, CORRECTED VERSION OF THE METADATA STEP ---
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
-          #
-          # !!! IMPORTANT: CUSTOMIZE THIS LINE !!!
-          #
           images: skoopy365/react2
-
-          # This tagging strategy is robust and will work on push events.
           tags: |
-            # type=raw allows us to use the 'date' function on any event.
-            # This is the correct way to get a timestamp on a push.
+            type=ref,event=branch
+            type=sha,format=short
             type=raw,value={{date 'YYYYMMDD-HHmmss'}}
+    # only needed if we enable platform below for additional arm image
+    #  - name: Set up Docker Buildx
+    #    id: buildx
+    #    uses: docker/setup-buildx-action@v2
 
-            # We are adding back the other two useful tags now that we've solved the main problem.
-           # type=ref,event=branch
-           # type=sha,format=short
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      # This step remains the same.
       - name: Build and push Docker image
+        id: build-and-push
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
+          # This is still slow, but caching will help a lot.
+          # Consider removing linux/arm64 if you don't need it for every build.
+         # platforms: linux/amd64,linux/arm64
+          push: true 
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          # Enable caching for huge performance gains on subsequent runs
+          cache-from: type=gha,scope=${{ github.workflow }}
+          cache-to: type=gha,scope=${{ github.workflow }},mode=max

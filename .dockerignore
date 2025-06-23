@@ -100,3 +100,26 @@ jspm_packages/
 
 # Bolt specific
 .bolt
+
+# ===============================================
+# Files specific to this project's optimization
+# ===============================================
+
+# Git repository metadata
+.git
+.gitignore
+
+# Local development and build artifacts
+node_modules
+dist
+npm-debug.log
+
+# Documentation and configuration files that don't affect the build
+README.md
+Dockerfile
+.dockerignore
+nginx.conf
+
+# GitHub Actions workflow files
+.github
+
