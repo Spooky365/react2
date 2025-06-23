@@ -24,52 +24,65 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
-  // NEU: State für das Kontaktformular
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    project: 'Linux Server Setup', // Standardwert
-    message: ''
+    project: 'Linux Server Setup',
+    message: '',
+    _gotcha: '' // Honeypot field for spam prevention
   });
-  const [formStatus, setFormStatus] = useState(''); // '' | 'success' | 'error'
+  const [formStatus, setFormStatus] = useState('');
 
-  // NEU: Funktion, die bei jeder Eingabe im Formular aufgerufen wird
+  // NEU: Handle input changes, including the honeypot
   const handleInputChange = (e) => {
-    const { id, value } = e.target;
+    const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [id]: value,
+      [name]: value,
     }));
   };
 
-  // NEU: Funktion zum Absenden des Formulars an Formspree
+  // GEÄNDERT: Funktion zum Absenden des Formulars an fncontact.com
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    
+    // Basic spam check: if the honeypot field is filled, it's likely a bot.
+    if (formData._gotcha) {
+      console.log("Bot detected!");
+      return; 
+    }
+    
     setFormStatus('sending');
 
+    // Create a new object without the '_gotcha' field to send to the API
+    const { _gotcha, ...dataToSend } = formData;
+    
+    const FNCONTACT_ENDPOINT = 'https://fncontact.com/GDQW'
+
     try {
-      const response = await fetch('https://formspree.io/f/myzjneab', { 
+      const response = await fetch(FNCONTACT_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
       });
 
       if (response.ok) {
         setFormStatus('success');
-        // Formularfelder zurücksetzen
         setFormData({
           name: '',
           email: '',
           project: 'Linux Server Setup',
-          message: ''
+          message: '',
+          _gotcha: ''
         });
       } else {
         setFormStatus('error');
       }
     } catch (error) {
+      console.error("Submission error:", error);
       setFormStatus('error');
     }
   };
@@ -124,7 +137,8 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-      {/* Navigation */}
+      {/* Navigation, Hero, Services, About, Projects sections remain the same */}
+      {/* ... (Code für Nav, Hero, Services, About, Projects) ... */}
       <nav className="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
@@ -222,6 +236,7 @@ function App() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </button>
               
+              {/* GEÄNDERT: Buttontext und onClick-Funktion */}
               <button 
                 onClick={() => scrollToSection('projects')}
                 className="inline-flex items-center px-8 py-4 bg-slate-800/80 text-white font-semibold rounded-lg hover:bg-slate-700 transition-all border border-slate-600"
@@ -302,6 +317,7 @@ function App() {
               </div>
               
               <div className="mt-8 grid grid-cols-2 gap-6">
+                {/* GEÄNDERT: Inhalt und Animation hinzugefügt */}
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
                   <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
                     24/7
@@ -310,6 +326,7 @@ function App() {
                   <div className="text-sm text-gray-400">Erreichbar</div>
                 </div>
                 
+                {/* GEÄNDERT: Animation hinzugefügt */}
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
                   <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
                     100% 
@@ -320,6 +337,7 @@ function App() {
               </div>
             </div>
             
+            {/* GEÄNDERT: Animation hinzugefügt */}
             <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
               <h3 className="text-xl font-bold text-white mb-6">Expertise</h3>
               
@@ -359,6 +377,7 @@ function App() {
           </div>
           
           <div className="flex justify-center">
+            {/* GEÄNDERT: Animation hinzugefügt */}
             <div className="max-w-4xl w-full bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 hover:border-cyan-500/50 transition-all hover:transform hover:scale-105">
               <h3 className="text-2xl font-bold text-white mb-4">
                 Vollautomatisierte CI/CD-Pipeline für eine React Webapp
@@ -408,8 +427,19 @@ function App() {
           
           <div className="flex justify-center">
             <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 w-full max-w-xl">
-              {/* GEÄNDERT: Formular mit onSubmit-Handler verknüpft */}
               <form onSubmit={handleFormSubmit} className="space-y-6">
+                
+                {/* Honeypot Field for Spam */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex="-1"
+                  autoComplete="off"
+                  className="hidden"
+                  value={formData._gotcha}
+                  onChange={handleInputChange}
+                />
+
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                     Name
@@ -417,9 +447,10 @@ function App() {
                   <input
                     type="text"
                     id="name"
+                    name="name" // GEÄNDERT: name-Attribut hinzugefügt
                     required
-                    value={formData.name} // NEU
-                    onChange={handleInputChange} // NEU
+                    value={formData.name}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
                     placeholder="Ihr Name"
                   />
@@ -432,9 +463,10 @@ function App() {
                   <input
                     type="email"
                     id="email"
+                    name="email" // GEÄNDERT: name-Attribut hinzugefügt
                     required
-                    value={formData.email} // NEU
-                    onChange={handleInputChange} // NEU
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
                     placeholder="ihre.email@beispiel.de"
                   />
@@ -446,8 +478,9 @@ function App() {
                   </label>
                   <select 
                     id="project" 
-                    value={formData.project} // NEU
-                    onChange={handleInputChange} // NEU
+                    name="project" // GEÄNDERT: name-Attribut hinzugefügt
+                    value={formData.project}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
                   >
                     <option>Linux Server Setup</option>
@@ -465,16 +498,16 @@ function App() {
                   </label>
                   <textarea
                     id="message"
+                    name="message" // GEÄNDERT: name-Attribut hinzugefügt
                     rows={4}
                     required
-                    value={formData.message} // NEU
-                    onChange={handleInputChange} // NEU
+                    value={formData.message}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
                     placeholder="Beschreiben Sie Ihr Projekt..."
                   ></textarea>
                 </div>
                 
-                {/* GEÄNDERT: Button und Feedback-Nachrichten */}
                 <div>
                   <button
                     type="submit"
@@ -487,7 +520,7 @@ function App() {
 
                   {formStatus === 'success' && (
                     <p className="text-green-400 mt-4 text-center">
-                      Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.
+                      Vielen Dank! Ihre Nachricht wurde sicher verschlüsselt gesendet.
                     </p>
                   )}
                   {formStatus === 'error' && (
