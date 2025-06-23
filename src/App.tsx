@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Server, 
   Cloud, 
@@ -18,34 +18,35 @@ import {
   HardDrive,
   GitFork,
   Power,
-  TrendingUp
+  TrendingUp,
+  Smile // Smiley-Icon importiert
 } from 'lucide-react';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
+  // NEU: Intersection Observer für performantes Scroll-Tracking
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'services', 'about', 'projects', 'contact'];
-      const scrollPosition = window.scrollY + 100;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetBottom = offsetTop + element.offsetHeight;
-
-          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
-            setActiveSection(section);
-            break;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
           }
-        }
-      }
-    };
+        });
+      },
+      // Optionen: Sektion wird als aktiv betrachtet, wenn sie zu 50% sichtbar ist.
+      // Dies verhindert, dass die Navigation zu früh oder zu spät wechselt.
+      { rootMargin: '-50% 0px -50% 0px' } 
+    );
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Alle Sektionen mit einer ID beobachten
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach((section) => observer.observe(section));
+
+    // Cleanup-Funktion: Observer entfernen, wenn die Komponente unmountet wird
+    return () => sections.forEach((section) => observer.unobserve(section));
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -88,12 +89,15 @@ function App() {
               <span className="text-xl font-bold text-white">Falk Solutions</span>
             </div>
             
-            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {['home', 'services', 'about', 'projects', 'contact'].map((item) => (
-                <button
+                <a
                   key={item}
-                  onClick={() => scrollToSection(item)}
+                  href={`#${item}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item);
+                  }}
                   className={`text-sm font-medium transition-colors ${
                     activeSection === item 
                       ? 'text-cyan-400' 
@@ -104,11 +108,10 @@ function App() {
                    item === 'services' ? 'Services' :
                    item === 'about' ? 'Über mich' :
                    item === 'projects' ? 'Projekte' : 'Kontakt'}
-                </button>
+                </a>
               ))}
             </div>
 
-            {/* Mobile menu button */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -120,21 +123,24 @@ function App() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden bg-slate-800/95 backdrop-blur-sm border-t border-slate-700/50">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {['home', 'services', 'about', 'projects', 'contact'].map((item) => (
-                <button
+                <a
                   key={item}
-                  onClick={() => scrollToSection(item)}
+                  href={`#${item}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item);
+                  }}
                   className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-md w-full text-left"
                 >
                   {item === 'home' ? 'Start' : 
                    item === 'services' ? 'Services' :
                    item === 'about' ? 'Über mich' :
                    item === 'projects' ? 'Projekte' : 'Kontakt'}
-                </button>
+                </a>
               ))}
             </div>
           </div>
@@ -254,11 +260,16 @@ function App() {
               <div className="mt-8 grid grid-cols-2 gap-6">
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
                   <div className="text-2xl font-bold text-cyan-400 mb-1">50+</div>
-                  <div className="text-sm text-gray-400">Erfolgreiche Projekte</div>
+                  {/* GEÄNDERT: Text wurde aktualisiert */}
+                  <div className="text-sm text-gray-400">Individuelle Lösungen</div>
                 </div>
                 
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
-                  <div className="text-2xl font-bold text-cyan-400 mb-1">100%</div>
+                  {/* GEÄNDERT: Smiley-Icon hinzugefügt */}
+                  <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
+                    100% 
+                    <Smile className="ml-2 h-6 w-6" />
+                  </div>
                   <div className="text-sm text-gray-400">Kundenorientiert</div>
                 </div>
               </div>
@@ -270,7 +281,9 @@ function App() {
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                 {[
                   { icon: <Globe className="h-5 w-5" />, name: "Cloud Infrastruktur" },
-                  { icon: <Cpu className="h-5 w-5" />, name: "Docker/Kubernetes" },
+                  // GEÄNDERT: Docker & Kubernetes aufgeteilt
+                  { icon: <Cpu className="h-5 w-5" />, name: "Docker" },
+                  { icon: <Cpu className="h-5 w-5" />, name: "Kubernetes" },
                   { icon: <HardDrive className="h-5 w-5" />, name: "Linux Administration" },
                   { icon: <Code className="h-5 w-5" />, name: "Infrastructure as Code" },
                   { icon: <Zap className="h-5 w-5" />, name: "Ansible Automation" },
@@ -294,11 +307,13 @@ function App() {
       <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
+            {/* GEÄNDERT: Überschrift zu Singular */}
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Letztes Projekt:
+              Projekt-Highlight:
             </h2>
+            {/* GEÄNDERT: Untertitel zu Singular */}
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Einblicke in eine vollautomatisierte CI/CD-Pipeline von der Entwicklung bis zum Live-System.
+              Einblick in eine vollautomatisierte CI/CD-Pipeline von der Entwicklung bis zum Live-System.
             </p>
           </div>
           
