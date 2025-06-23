@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 
 // I see you've updated the version, great practice!
-const APP_VERSION = "v1.1.1"; 
+const APP_VERSION = "v1.1.2"; 
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
