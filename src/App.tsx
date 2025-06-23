@@ -3,13 +3,11 @@ import {
   Server, 
   Cloud, 
   Code, 
-  Mail, 
   CheckCircle,
   Menu,
   X,
   ArrowRight,
   Terminal,
-  Database,
   Zap,
   Globe,
   Lock,
@@ -25,6 +23,57 @@ import {
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+
+  // NEU: State für das Kontaktformular
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    project: 'Linux Server Setup', // Standardwert
+    message: ''
+  });
+  const [formStatus, setFormStatus] = useState(''); // '' | 'success' | 'error'
+
+  // NEU: Funktion, die bei jeder Eingabe im Formular aufgerufen wird
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  // NEU: Funktion zum Absenden des Formulars an Formspree
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus('sending');
+
+    try {
+      const response = await fetch('https://formspree.io/f/myzjneab', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setFormStatus('success');
+        // Formularfelder zurücksetzen
+        setFormData({
+          name: '',
+          email: '',
+          project: 'Linux Server Setup',
+          message: ''
+        });
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      setFormStatus('error');
+    }
+  };
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -76,12 +125,10 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
       {/* Navigation */}
-      {/* GEÄNDERT: Höhe der Navigationsleiste reduziert */}
       <nav className="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-12"> {/* Höhe von h-16 auf h-12 reduziert */}
+          <div className="flex justify-between items-center h-12">
             <div className="flex items-center space-x-2">
-              {/* Logo und Textgröße für die neue Höhe angepasst */}
               <Terminal className="h-6 w-6 text-cyan-400" />
               <span className="text-lg font-bold text-white">Falk Solutions</span>
             </div>
@@ -175,7 +222,6 @@ function App() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </button>
               
-              {/* GEÄNDERT: Buttontext und onClick-Funktion */}
               <button 
                 onClick={() => scrollToSection('projects')}
                 className="inline-flex items-center px-8 py-4 bg-slate-800/80 text-white font-semibold rounded-lg hover:bg-slate-700 transition-all border border-slate-600"
@@ -362,7 +408,8 @@ function App() {
           
           <div className="flex justify-center">
             <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 w-full max-w-xl">
-              <form className="space-y-6">
+              {/* GEÄNDERT: Formular mit onSubmit-Handler verknüpft */}
+              <form onSubmit={handleFormSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                     Name
@@ -370,6 +417,9 @@ function App() {
                   <input
                     type="text"
                     id="name"
+                    required
+                    value={formData.name} // NEU
+                    onChange={handleInputChange} // NEU
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
                     placeholder="Ihr Name"
                   />
@@ -382,6 +432,9 @@ function App() {
                   <input
                     type="email"
                     id="email"
+                    required
+                    value={formData.email} // NEU
+                    onChange={handleInputChange} // NEU
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
                     placeholder="ihre.email@beispiel.de"
                   />
@@ -391,7 +444,12 @@ function App() {
                   <label htmlFor="project" className="block text-sm font-medium text-gray-300 mb-2">
                     Projekt-Art
                   </label>
-                  <select className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500">
+                  <select 
+                    id="project" 
+                    value={formData.project} // NEU
+                    onChange={handleInputChange} // NEU
+                    className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                  >
                     <option>Linux Server Setup</option>
                     <option>Cloud Migration</option>
                     <option>DevOps Beratung</option>
@@ -408,18 +466,36 @@ function App() {
                   <textarea
                     id="message"
                     rows={4}
+                    required
+                    value={formData.message} // NEU
+                    onChange={handleInputChange} // NEU
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
                     placeholder="Beschreiben Sie Ihr Projekt..."
                   ></textarea>
                 </div>
                 
-                <button
-                  type="submit"
-                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-105"
-                >
-                  Nachricht senden
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </button>
+                {/* GEÄNDERT: Button und Feedback-Nachrichten */}
+                <div>
+                  <button
+                    type="submit"
+                    disabled={formStatus === 'sending'}
+                    className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {formStatus === 'sending' ? 'Wird gesendet...' : 'Nachricht senden'}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </button>
+
+                  {formStatus === 'success' && (
+                    <p className="text-green-400 mt-4 text-center">
+                      Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.
+                    </p>
+                  )}
+                  {formStatus === 'error' && (
+                    <p className="text-red-400 mt-4 text-center">
+                      Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.
+                    </p>
+                  )}
+                </div>
               </form>
             </div>
           </div>
