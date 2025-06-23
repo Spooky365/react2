@@ -57,7 +57,7 @@ function App() {
     // Create a new object without the '_gotcha' field to send to the API
     const { _gotcha, ...dataToSend } = formData;
     
-    const FNCONTACT_ENDPOINT = 'https://fncontact.com/GDQW'
+    const FNCONTACT_ENDPOINT = 'https://fncontact.com/api/send/GDQW'
 
     try {
       const response = await fetch(FNCONTACT_ENDPOINT, {
