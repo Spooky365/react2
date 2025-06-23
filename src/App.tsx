@@ -20,6 +20,9 @@ import {
   Phone
 } from 'lucide-react';
 
+// NEU: Versionsnummer hier definieren. Bei jeder Änderung erhöhen.
+const APP_VERSION = "v1.1.0"; 
+
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -33,7 +36,6 @@ function App() {
   });
   const [formStatus, setFormStatus] = useState('');
 
-  // NEU: Handle input changes, including the honeypot
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -42,11 +44,9 @@ function App() {
     }));
   };
 
-  // GEÄNDERT: Funktion zum Absenden des Formulars an fncontact.com
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     
-    // Basic spam check: if the honeypot field is filled, it's likely a bot.
     if (formData._gotcha) {
       console.log("Bot detected!");
       return; 
@@ -54,10 +54,9 @@ function App() {
     
     setFormStatus('sending');
 
-    // Create a new object without the '_gotcha' field to send to the API
     const { _gotcha, ...dataToSend } = formData;
     
-    const FNCONTACT_ENDPOINT = 'https://fncontact.com/api/send/GDQW'
+    const FNCONTACT_ENDPOINT = 'https://fncontact.com/api/send/GDQW';
 
     try {
       const response = await fetch(FNCONTACT_ENDPOINT, {
@@ -137,8 +136,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-      {/* Navigation, Hero, Services, About, Projects sections remain the same */}
-      {/* ... (Code für Nav, Hero, Services, About, Projects) ... */}
+      {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
@@ -236,7 +234,6 @@ function App() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </button>
               
-              {/* GEÄNDERT: Buttontext und onClick-Funktion */}
               <button 
                 onClick={() => scrollToSection('projects')}
                 className="inline-flex items-center px-8 py-4 bg-slate-800/80 text-white font-semibold rounded-lg hover:bg-slate-700 transition-all border border-slate-600"
@@ -317,7 +314,6 @@ function App() {
               </div>
               
               <div className="mt-8 grid grid-cols-2 gap-6">
-                {/* GEÄNDERT: Inhalt und Animation hinzugefügt */}
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
                   <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
                     24/7
@@ -326,7 +322,6 @@ function App() {
                   <div className="text-sm text-gray-400">Erreichbar</div>
                 </div>
                 
-                {/* GEÄNDERT: Animation hinzugefügt */}
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
                   <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
                     100% 
@@ -337,7 +332,6 @@ function App() {
               </div>
             </div>
             
-            {/* GEÄNDERT: Animation hinzugefügt */}
             <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
               <h3 className="text-xl font-bold text-white mb-6">Expertise</h3>
               
@@ -377,7 +371,6 @@ function App() {
           </div>
           
           <div className="flex justify-center">
-            {/* GEÄNDERT: Animation hinzugefügt */}
             <div className="max-w-4xl w-full bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 hover:border-cyan-500/50 transition-all hover:transform hover:scale-105">
               <h3 className="text-2xl font-bold text-white mb-4">
                 Vollautomatisierte CI/CD-Pipeline für eine React Webapp
@@ -412,7 +405,7 @@ function App() {
           </div>
         </div>
       </section>
-
+      
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/50">
         <div className="max-w-7xl mx-auto">
@@ -429,7 +422,6 @@ function App() {
             <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 w-full max-w-xl">
               <form onSubmit={handleFormSubmit} className="space-y-6">
                 
-                {/* Honeypot Field for Spam */}
                 <input
                   type="text"
                   name="_gotcha"
@@ -447,7 +439,7 @@ function App() {
                   <input
                     type="text"
                     id="name"
-                    name="name" // GEÄNDERT: name-Attribut hinzugefügt
+                    name="name"
                     required
                     value={formData.name}
                     onChange={handleInputChange}
@@ -463,7 +455,7 @@ function App() {
                   <input
                     type="email"
                     id="email"
-                    name="email" // GEÄNDERT: name-Attribut hinzugefügt
+                    name="email"
                     required
                     value={formData.email}
                     onChange={handleInputChange}
@@ -478,7 +470,7 @@ function App() {
                   </label>
                   <select 
                     id="project" 
-                    name="project" // GEÄNDERT: name-Attribut hinzugefügt
+                    name="project"
                     value={formData.project}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
@@ -498,7 +490,7 @@ function App() {
                   </label>
                   <textarea
                     id="message"
-                    name="message" // GEÄNDERT: name-Attribut hinzugefügt
+                    name="message"
                     rows={4}
                     required
                     value={formData.message}
@@ -535,18 +527,27 @@ function App() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-slate-700/50">
+      {/* GEÄNDERT: Footer mit Versionsnummer */}
+      <footer className="py-8 px-4 sm:px-6 lg:px-8 border-t border-slate-700/50">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-2 mb-4 md:mb-0">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            {/* Left Side: Logo and Name */}
+            <div className="flex items-center space-x-2">
               <Terminal className="h-6 w-6 text-cyan-400" />
               <span className="text-lg font-bold text-white">Falk Solutions</span>
             </div>
             
-            <div className="text-gray-400 text-sm">
-              © 2024 Falk Solutions. Alle Rechte vorbehalten.
+            {/* Right Side: Copyright and Version */}
+            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+              <div className="text-gray-400 text-sm text-center sm:text-right">
+                © 2024 Falk Solutions. Alle Rechte vorbehalten.
+              </div>
+              <div className="text-gray-500 text-sm">
+                {APP_VERSION}
+              </div>
             </div>
+
           </div>
         </div>
       </footer>
