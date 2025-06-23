@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Server, 
   Cloud, 
   Code, 
   Mail, 
-  MapPin, 
   CheckCircle,
   Menu,
   X,
@@ -19,14 +18,13 @@ import {
   GitFork,
   Power,
   TrendingUp,
-  Smile // Smiley-Icon importiert
+  Smile 
 } from 'lucide-react';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
-  // NEU: Intersection Observer für performantes Scroll-Tracking
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -36,16 +34,12 @@ function App() {
           }
         });
       },
-      // Optionen: Sektion wird als aktiv betrachtet, wenn sie zu 50% sichtbar ist.
-      // Dies verhindert, dass die Navigation zu früh oder zu spät wechselt.
       { rootMargin: '-50% 0px -50% 0px' } 
     );
 
-    // Alle Sektionen mit einer ID beobachten
     const sections = document.querySelectorAll('section[id]');
     sections.forEach((section) => observer.observe(section));
 
-    // Cleanup-Funktion: Observer entfernen, wenn die Komponente unmountet wird
     return () => sections.forEach((section) => observer.unobserve(section));
   }, []);
 
@@ -197,7 +191,7 @@ function App() {
               Meine Services
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Umfassende DevOps-Lösungen für moderne Unternehmen
+              Umfassende IT-Lösungen für moderne Unternehmen
             </p>
           </div>
           
@@ -260,12 +254,10 @@ function App() {
               <div className="mt-8 grid grid-cols-2 gap-6">
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
                   <div className="text-2xl font-bold text-cyan-400 mb-1">50+</div>
-                  {/* GEÄNDERT: Text wurde aktualisiert */}
                   <div className="text-sm text-gray-400">Individuelle Lösungen</div>
                 </div>
                 
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
-                  {/* GEÄNDERT: Smiley-Icon hinzugefügt */}
                   <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
                     100% 
                     <Smile className="ml-2 h-6 w-6" />
@@ -281,9 +273,7 @@ function App() {
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                 {[
                   { icon: <Globe className="h-5 w-5" />, name: "Cloud Infrastruktur" },
-                  // GEÄNDERT: Docker & Kubernetes aufgeteilt
-                  { icon: <Cpu className="h-5 w-5" />, name: "Docker" },
-                  { icon: <Cpu className="h-5 w-5" />, name: "Kubernetes" },
+                  { icon: <Cpu className="h-5 w-5" />, name: <>Docker<br />Kubernetes</> },
                   { icon: <HardDrive className="h-5 w-5" />, name: "Linux Administration" },
                   { icon: <Code className="h-5 w-5" />, name: "Infrastructure as Code" },
                   { icon: <Zap className="h-5 w-5" />, name: "Ansible Automation" },
@@ -294,7 +284,7 @@ function App() {
                 ].map((skill, index) => (
                   <div key={index} className="flex items-center space-x-3 text-gray-300">
                     <div className="text-cyan-400">{skill.icon}</div>
-                    <span className="text-sm">{skill.name}</span>
+                    <span className="text-sm leading-tight">{skill.name}</span>
                   </div>
                 ))}
               </div>
@@ -307,11 +297,9 @@ function App() {
       <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            {/* GEÄNDERT: Überschrift zu Singular */}
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               Projekt-Highlight:
             </h2>
-            {/* GEÄNDERT: Untertitel zu Singular */}
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Einblick in eine vollautomatisierte CI/CD-Pipeline von der Entwicklung bis zum Live-System.
             </p>
@@ -361,36 +349,12 @@ function App() {
               Kontakt aufnehmen
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Bereit für Ihr nächstes DevOps-Projekt? Lassen Sie uns sprechen.
+              Bereit für Ihr nächstes Projekt? Lassen Sie uns sprechen.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <div className="space-y-8">
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
-                    <Mail className="h-6 w-6 text-cyan-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">E-Mail</h3>
-                    <p className="text-gray-300">kontakt@falk-solutions.de</p>
-                  </div>
-                </div>
-                                
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
-                    <MapPin className="h-6 w-6 text-cyan-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Standort</h3>
-                    <p className="text-gray-300">Deutschland (Remote verfügbar)</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8">
+          <div className="flex justify-center">
+            <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 w-full max-w-xl">
               <form className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
