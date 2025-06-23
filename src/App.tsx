@@ -272,7 +272,7 @@ function App() {
               <div className="mt-8 grid grid-cols-2 gap-6">
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
                   <div className="text-2xl font-bold text-cyan-400 mb-1">50+</div>
-                  <div className="text-sm text-gray-400">Erfolgreiche Projekte</div>
+                  <div className="text-sm text-gray-400">Zufriedene Kunden</div>
                 </div>
                 
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
@@ -290,9 +290,9 @@ function App() {
                   { icon: <Globe className="h-5 w-5" />, name: "AWS/Azure/GCP" },
                   { icon: <Cpu className="h-5 w-5" />, name: "Docker/Kubernetes" },
                   { icon: <HardDrive className="h-5 w-5" />, name: "Linux Administration" },
-                  { icon: <Lock className="h-5 w-5" />, name: "Security & Compliance" },
                   { icon: <Code className="h-5 w-5" />, name: "Infrastructure as Code" },
-                  { icon: <Database className="h-5 w-5" />, name: "Database Management" }
+                  { icon: <Zap className="h-5 w-5" />, name: "Ansible Automation" },
+                  { icon: <Lock className="h-5 w-5" />, name: "Firewalls & Security" }
                 ].map((skill, index) => (
                   <div key={index} className="flex items-center space-x-3 text-gray-300">
                     <div className="text-cyan-400">{skill.icon}</div>
