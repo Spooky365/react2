@@ -74,27 +74,6 @@ function App() {
     }
   ];
 
-  const projects = [
-    {
-      title: "E-Commerce Infrastructure",
-      description: "Skalierbare Kubernetes-Cluster für großen Online-Shop mit 99.9% Uptime",
-      tech: ["Kubernetes", "AWS", "Redis", "PostgreSQL"],
-      impact: "50% Performance-Steigerung"
-    },
-    {
-      title: "Financial Services Platform",
-      description: "Sichere DevOps-Pipeline für Fintech-Startup mit strengen Compliance-Anforderungen",
-      tech: ["Docker", "Jenkins", "Vault", "Terraform"],
-      impact: "90% Reduzierung der Deployment-Zeit"
-    },
-    {
-      title: "Healthcare Data Processing",
-      description: "GDPR-konforme Datenverarbeitungsplattform mit automatisierter Backup-Strategie",
-      tech: ["Linux", "Python", "Elasticsearch", "Grafana"],
-      impact: "Vollständige Compliance-Erfüllung"
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
       {/* Navigation */}
@@ -287,7 +266,7 @@ function App() {
               
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: <Globe className="h-5 w-5" />, name: "AWS/Azure/GCP" },
+                  { icon: <Globe className="h-5 w-5" />, name: "Cloud Infrastruktur" },
                   { icon: <Cpu className="h-5 w-5" />, name: "Docker/Kubernetes" },
                   { icon: <HardDrive className="h-5 w-5" />, name: "Linux Administration" },
                   { icon: <Code className="h-5 w-5" />, name: "Infrastructure as Code" },
@@ -310,43 +289,43 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Erfolgreiche Projekte
+              Letztes Projekt:
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Einblicke in meine jüngsten DevOps- und Infrastruktur-Projekte
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Einblicke in eine vollautomatisierte CI/CD-Pipeline von der Entwicklung bis zum Live-System.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <div 
-                key={index}
-                className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 hover:border-cyan-500/50 transition-all"
-              >
-                <h3 className="text-xl font-bold text-white mb-4">
-                  {project.title}
-                </h3>
-                
-                <p className="text-gray-300 mb-6">
-                  {project.description}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech, idx) => (
-                    <span 
-                      key={idx}
-                      className="px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs rounded-full border border-cyan-500/20"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                
-                <div className="text-green-400 font-semibold text-sm">
-                  {project.impact}
-                </div>
+          <div className="flex justify-center">
+            <div className="max-w-4xl w-full bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 hover:border-cyan-500/50 transition-all">
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Vollautomatisierte CI/CD-Pipeline für eine React Webapp
+              </h3>
+              
+              <p className="text-gray-300 mb-6">
+                Entwicklung einer kompletten CI/CD-Pipeline, die eine React-Webanwendung von einem Git-Push bis zum Live-Deployment auf AWS vollautomatisch bereitstellt.
+              </p>
+
+              <ul className="space-y-3 mb-6 text-gray-300">
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Automatisierte Builds:</strong> Github Actions für Testing und Docker-Image Erstellung.</span></li>
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Infrastructure as Code:</strong> Terraform für die Bereitstellung der AWS-Ressourcen.</span></li>
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Cluster-Setup:</strong> Ansible für die schnelle Konfiguration eines K3s Kubernetes-Clusters.</span></li>
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>GitOps-Workflow:</strong> FluxCD rollt neue Versionen nach einem Push in unter einer Minute live aus.</span></li>
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Sicherheit & Komfort:</strong> Automatisches SSL-Zertifikatsmanagement inklusive.</span></li>
+              </ul>
+              
+              <div className="flex flex-wrap gap-2 mb-6">
+                {['React', 'GitHub Actions', 'FluxCD', 'Terraform', 'Ansible', 'K3s', 'AWS'].map((tech) => (
+                  <span key={tech} className="px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs rounded-full border border-cyan-500/20">{tech}</span>
+                ))}
               </div>
-            ))}
+              
+              <div className="bg-slate-800 p-4 rounded-lg border border-slate-600">
+                  <p className="text-green-400 font-semibold text-center">
+                    Resultat: Deployment von Zero-to-Live in wenigen Minuten und vollautomatisierte Updates.
+                  </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
