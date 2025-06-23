@@ -1,47 +1,54 @@
 # =================================================================
-# Stage 1: Build the React Application
+# Stage 1: Build the React Application (This stage remains the same)
 # =================================================================
 FROM node:18-alpine AS builder
-
 WORKDIR /app
-
-# Copy ONLY package files first to leverage Docker cache.
-# This layer only rebuilds if package.json or package-lock.json changes.
 COPY package*.json ./
-
-# Install dependencies. This is the slowest step, so we want it to be cached
-# as often as possible.
 RUN npm ci
-
-# Now copy the rest of the application source code.
-# This layer only rebuilds if source files change.
 COPY . .
-
-# Build the application. This only runs if the source code has changed,
-# or if the dependencies were reinstalled.
 RUN npm run build
 
-
 # =================================================================
-# Stage 2: Serve Application with Nginx
+# Stage 2: Create the Security-Hardened Production Server
 # =================================================================
-FROM nginx:alpine AS production
+FROM node:18-alpine AS production
+WORKDIR /app
 
-# Install curl for health checks
+# NEU: Erstelle einen dedizierten non-root User und eine Gruppe
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# Install curl for the health check
 RUN apk add --no-cache curl
 
-# Copy the custom Nginx configuration.
-# We copy this first so that if we only change the app code, this layer is cached.
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Kopiere die package-Dateien und setze die Berechtigungen, BEVOR npm install läuft
+COPY package*.json ./
+RUN chown -R appuser:appgroup .
 
-# Copy the built static assets from the 'builder' stage.
-COPY --from=builder /app/dist /usr/share/nginx/html
+# NEU: Wechsle zum non-root User, um npm install auszuführen
+USER appuser
 
-EXPOSE 80
+# Installiere NUR die production-Abhängigkeiten. Läuft jetzt als 'appuser'
+RUN npm install --production
 
-# Health check remains the same
+# NEU: Wechsle temporär zurück zu root, um Dateien aus dem Builder-Stage zu kopieren
+USER root
+
+# Kopiere die gebaute App und den Server-Code
+COPY --from=builder /app/dist ./dist
+COPY server.js .
+
+# NEU: Setze die finalen Berechtigungen für alle Anwendungsdateien
+RUN chown -R appuser:appgroup .
+
+# NEU: Wechsle final zum non-root User, um die App auszuführen
+USER appuser
+
+# GEÄNDERT: Expose den non-privileged Port
+EXPOSE 3001
+
+# GEÄNDERT: Health check zielt auf den neuen Port
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost/ || exit 1
+  CMD curl -f http://localhost:3001/ || exit 1
 
-# Start Nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+# Der CMD-Befehl bleibt gleich, wird aber jetzt als 'appuser' ausgeführt
+CMD [ "node", "server.js" ]
