@@ -20,21 +20,20 @@ import {
   Phone
 } from 'lucide-react';
 
-// NEU: Versionsnummer hier definieren. Bei jeder Änderung erhöhen.
 const APP_VERSION = "v1.1.0"; 
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
+  // GEÄNDERT: Wir brauchen keinen Form-Status oder Submit-Handler mehr.
+  // Wir behalten nur den formData-State, um die Felder zu steuern.
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     project: 'Linux Server Setup',
-    message: '',
-    _gotcha: '' // Honeypot field for spam prevention
+    message: ''
   });
-  const [formStatus, setFormStatus] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -44,48 +43,7 @@ function App() {
     }));
   };
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (formData._gotcha) {
-      console.log("Bot detected!");
-      return; 
-    }
-    
-    setFormStatus('sending');
-
-    const { _gotcha, ...dataToSend } = formData;
-    
-    const FNCONTACT_ENDPOINT = 'https://fncontact.com/api/send/GDQW';
-
-    try {
-      const response = await fetch(FNCONTACT_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify(dataToSend),
-      });
-
-      if (response.ok) {
-        setFormStatus('success');
-        setFormData({
-          name: '',
-          email: '',
-          project: 'Linux Server Setup',
-          message: '',
-          _gotcha: ''
-        });
-      } else {
-        setFormStatus('error');
-      }
-    } catch (error) {
-      console.error("Submission error:", error);
-      setFormStatus('error');
-    }
-  };
-
+  // Die handleFormSubmit-Funktion wird nicht mehr benötigt und wurde entfernt.
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -136,7 +94,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-      {/* Navigation */}
+      {/* ... (Restlicher Code für Navigation, Header, etc. bleibt gleich) ... */}
       <nav className="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
@@ -420,17 +378,20 @@ function App() {
           
           <div className="flex justify-center">
             <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 w-full max-w-xl">
-              <form onSubmit={handleFormSubmit} className="space-y-6">
+              
+              {/* GEÄNDERT: Formular sendet jetzt direkt ohne JavaScript */}
+              <form 
+                action="https://fncontact.com/api/send/GDQW" 
+                method="POST" 
+                className="space-y-6"
+              >
                 
-                <input
-                  type="text"
-                  name="_gotcha"
-                  tabIndex="-1"
-                  autoComplete="off"
-                  className="hidden"
-                  value={formData._gotcha}
-                  onChange={handleInputChange}
-                />
+                {/* Honeypot-Feld (unsichtbar) für Spam-Schutz */}
+                <input type="text" name="_gotcha" className="hidden" />
+
+                {/* Redirect-URL nach erfolgreicher Übermittlung */}
+                {/* Sie können hier eine eigene "Danke"-Seite erstellen oder die Seite einfach neu laden lassen */}
+                <input type="hidden" name="_next" value={window.location.href} />
 
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
@@ -439,7 +400,7 @@ function App() {
                   <input
                     type="text"
                     id="name"
-                    name="name"
+                    name="name" // Wichtig: 'name' Attribut wird für die Übermittlung benötigt
                     required
                     value={formData.name}
                     onChange={handleInputChange}
@@ -501,25 +462,14 @@ function App() {
                 </div>
                 
                 <div>
+                  {/* Der Button ist jetzt ein einfacher Submit-Button */}
                   <button
                     type="submit"
-                    disabled={formStatus === 'sending'}
-                    className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-105"
                   >
-                    {formStatus === 'sending' ? 'Wird gesendet...' : 'Nachricht senden'}
+                    Nachricht senden
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </button>
-
-                  {formStatus === 'success' && (
-                    <p className="text-green-400 mt-4 text-center">
-                      Vielen Dank! Ihre Nachricht wurde sicher verschlüsselt gesendet.
-                    </p>
-                  )}
-                  {formStatus === 'error' && (
-                    <p className="text-red-400 mt-4 text-center">
-                      Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.
-                    </p>
-                  )}
                 </div>
               </form>
             </div>
@@ -527,18 +477,16 @@ function App() {
         </div>
       </section>
 
-      {/* GEÄNDERT: Footer mit Versionsnummer */}
+      {/* Footer */}
       <footer className="py-8 px-4 sm:px-6 lg:px-8 border-t border-slate-700/50">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             
-            {/* Left Side: Logo and Name */}
             <div className="flex items-center space-x-2">
               <Terminal className="h-6 w-6 text-cyan-400" />
               <span className="text-lg font-bold text-white">Falk Solutions</span>
             </div>
             
-            {/* Right Side: Copyright and Version */}
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
               <div className="text-gray-400 text-sm text-center sm:text-right">
                 © 2024 Falk Solutions. Alle Rechte vorbehalten.
