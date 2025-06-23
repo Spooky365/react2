@@ -15,7 +15,10 @@ import {
   Globe,
   Lock,
   Cpu,
-  HardDrive
+  HardDrive,
+  GitFork,
+  Power,
+  TrendingUp
 } from 'lucide-react';
 
 function App() {
@@ -251,12 +254,12 @@ function App() {
               <div className="mt-8 grid grid-cols-2 gap-6">
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
                   <div className="text-2xl font-bold text-cyan-400 mb-1">50+</div>
-                  <div className="text-sm text-gray-400">Zufriedene Kunden</div>
+                  <div className="text-sm text-gray-400">Erfolgreiche Projekte</div>
                 </div>
                 
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
-                  <div className="text-2xl font-bold text-cyan-400 mb-1">99.9%</div>
-                  <div className="text-sm text-gray-400">System Uptime</div>
+                  <div className="text-2xl font-bold text-cyan-400 mb-1">100%</div>
+                  <div className="text-sm text-gray-400">Kundenorientiert</div>
                 </div>
               </div>
             </div>
@@ -264,14 +267,17 @@ function App() {
             <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700/50">
               <h3 className="text-xl font-bold text-white mb-6">Expertise</h3>
               
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                 {[
                   { icon: <Globe className="h-5 w-5" />, name: "Cloud Infrastruktur" },
                   { icon: <Cpu className="h-5 w-5" />, name: "Docker/Kubernetes" },
                   { icon: <HardDrive className="h-5 w-5" />, name: "Linux Administration" },
                   { icon: <Code className="h-5 w-5" />, name: "Infrastructure as Code" },
                   { icon: <Zap className="h-5 w-5" />, name: "Ansible Automation" },
-                  { icon: <Lock className="h-5 w-5" />, name: "Firewalls & Security" }
+                  { icon: <Lock className="h-5 w-5" />, name: "Firewalls & Security" },
+                  { icon: <GitFork className="h-5 w-5" />, name: "Loadbalancing" },
+                  { icon: <Power className="h-5 w-5" />, name: "High Availability" },
+                  { icon: <TrendingUp className="h-5 w-5" />, name: "Scaling" },
                 ].map((skill, index) => (
                   <div key={index} className="flex items-center space-x-3 text-gray-300">
                     <div className="text-cyan-400">{skill.icon}</div>
@@ -303,7 +309,7 @@ function App() {
               </h3>
               
               <p className="text-gray-300 mb-6">
-                Entwicklung einer kompletten CI/CD-Pipeline, die eine React-Webanwendung von einem Git-Push bis zum Live-Deployment auf AWS vollautomatisch bereitstellt.
+                Entwicklung einer kompletten CI/CD-Pipeline, die eine React-Webanwendung von einem Git-Repository mittels FluxCD auf AWS vollautomatisch bereitstellt.
               </p>
 
               <ul className="space-y-3 mb-6 text-gray-300">
@@ -311,7 +317,9 @@ function App() {
                  <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Infrastructure as Code:</strong> Terraform für die Bereitstellung der AWS-Ressourcen.</span></li>
                  <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Cluster-Setup:</strong> Ansible für die schnelle Konfiguration eines K3s Kubernetes-Clusters.</span></li>
                  <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>GitOps-Workflow:</strong> FluxCD rollt neue Versionen nach einem Push in unter einer Minute live aus.</span></li>
-                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Sicherheit & Komfort:</strong> Automatisches SSL-Zertifikatsmanagement inklusive.</span></li>
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Sicherheit & Komfort:</strong> Automatisches SSL-Zertifikatsmanagement inklusive mittels Cert-Manager.</span></li>
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Loadbalancing & Ingress:</strong> AWS Loadbalancer für Kubernetes Control Plane und HaProxyIngress für optimale Ressourcen-Nutzung.</span></li>
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Verfügbarkeit & Skalierung:</strong> Konzipiert für High Availability und einfache Skalierung der Workloads.</span></li>
               </ul>
               
               <div className="flex flex-wrap gap-2 mb-6">
