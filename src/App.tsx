@@ -123,15 +123,15 @@ function App() {
   const services = [
     {
       icon: <Server className="h-8 w-8" />,
-      title: "Linux Server Administration",
+      title: "Linux-Server-Administration",
       description: "Professionelle Verwaltung und Optimierung von Linux-Servern für maximale Performance und Sicherheit.",
       features: ["Ubuntu/CentOS/Debian", "Performance-Tuning", "Monitoring & Alerts", "Backup-Strategien"]
     },
     {
       icon: <Cloud className="h-8 w-8" />,
       title: "Cloud DevOps",
-      description: "Moderne Cloud-Infrastrukturen mit CI/CD-Pipelines, Container-Orchestrierung und Automatisierung.",
-      features: ["Cloud Providers (AWS, OCI, ...)", "Docker & Kubernetes", "Infrastructure as Code", "FluxCD / ArgoCD / Github Actions"]
+      description: "Moderne Cloud-Infrastruktur mit CI/CD-Pipelines, Container-Orchestrierung und Automatisierung.",
+      features: ["Cloud-Anbieter (AWS, OCI, ...)", "Docker & Kubernetes", "Infrastructure as Code", "FluxCD / ArgoCD / Github Actions"]
     },
     {
       icon: <Terminal className="h-8 w-8" />,
@@ -167,7 +167,7 @@ function App() {
                   }`}
                 >
                   {item === 'home' ? 'Start' : 
-                   item === 'services' ? 'Services' :
+                   item === 'services' ? 'Leistungen' :
                    item === 'about' ? 'Über mich' :
                    item === 'projects' ? 'Projekte' : 'Kontakt'}
                 </a>
@@ -199,7 +199,7 @@ function App() {
                   className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-md w-full text-left"
                 >
                   {item === 'home' ? 'Start' : 
-                   item === 'services' ? 'Services' :
+                   item === 'services' ? 'Leistungen' :
                    item === 'about' ? 'Über mich' :
                    item === 'projects' ? 'Projekte' : 'Kontakt'}
                 </a>
@@ -219,15 +219,15 @@ function App() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Moderne IT-Infrastrukturen
+              Moderne IT-Infrastruktur
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
-                für Ihr Business
+                für Ihr Unternehmen
               </span>
             </h1>
             
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
-              Ich bin Ihr spezialisierter DevOps-Freelancer für Linux-Server-Administration, 
-              Cloud-Infrastrukturen und Automatisierung. Lassen Sie uns Ihre IT-Systeme 
+              Ich bin Ihr spezialisierter IT-Freelancer für Linux-Server-Administration, 
+              Cloud & DevOps-Infrastruktur und Automatisierung. Lassen Sie uns Ihre IT-Systeme 
               auf das nächste Level bringen.
             </p>
             
@@ -256,7 +256,7 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Meine Services
+              Meine Leistungen
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Umfassende IT-Lösungen für moderne Unternehmen
@@ -306,8 +306,8 @@ function App() {
               
               <div className="space-y-6 text-gray-300">
                 <p className="text-lg">
-                  Mit über 8 Jahren Erfahrung in der IT-Branche spezialisiere ich mich auf 
-                  DevOps-Praktiken, Linux-Server-Administration und Cloud-Infrastrukturen. 
+                  Mit über 8 Jahren Erfahrung in der IT-Branche bin ich auf 
+                  DevOps-Praktiken, Linux-Server-Administration und Cloud-Infrastruktur spezialisiert. 
                   Mein Fokus liegt auf der Automatisierung von Prozessen und der Optimierung 
                   von Systemen für maximale Effizienz.
                 </p>
@@ -325,15 +325,15 @@ function App() {
                     24/7
                     <Phone className="ml-2 h-6 w-6" />
                   </div>
-                  <div className="text-sm text-gray-400">Erreichbar</div>
+                  <div className="text-sm text-gray-400">erreichbar</div>
                 </div>
                 
                 <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 transition-all hover:transform hover:scale-105 hover:border-cyan-500/50">
                   <div className="flex items-center text-2xl font-bold text-cyan-400 mb-1">
-                    100% 
+                    100 %
                     <Smile className="ml-2 h-6 w-6" />
                   </div>
-                  <div className="text-sm text-gray-400">Kundenorientiert</div>
+                  <div className="text-sm text-gray-400">kundenorientiert</div>
                 </div>
               </div>
             </div>
@@ -343,11 +343,11 @@ function App() {
               
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                 {[
-                  { icon: <Globe className="h-5 w-5" />, name: "Cloud Infrastruktur" },
+                  { icon: <Globe className="h-5 w-5" />, name: "Cloud-Infrastruktur" },
                   { icon: <Cpu className="h-5 w-5" />, name: <>Docker<br />Kubernetes</> },
-                  { icon: <HardDrive className="h-5 w-5" />, name: "Linux Administration" },
+                  { icon: <HardDrive className="h-5 w-5" />, name: "Linux-Administration" },
                   { icon: <Code className="h-5 w-5" />, name: "Infrastructure as Code" },
-                  { icon: <Zap className="h-5 w-5" />, name: "Ansible Automation" },
+                  { icon: <Zap className="h-5 w-5" />, name: "Ansible-Automatisierung" },
                   { icon: <Lock className="h-5 w-5" />, name: "Firewalls & Security" },
                   { icon: <GitFork className="h-5 w-5" />, name: "Loadbalancing" },
                   { icon: <Power className="h-5 w-5" />, name: "High Availability" },
@@ -379,20 +379,20 @@ function App() {
           <div className="flex justify-center">
             <div className="max-w-4xl w-full bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 hover:border-cyan-500/50 transition-all hover:transform hover:scale-105">
               <h3 className="text-2xl font-bold text-white mb-4">
-                Vollautomatisierte CI/CD-Pipeline für eine React Webapp
+                Vollautomatisierte CI/CD-Pipeline für eine React-Web-App
               </h3>
               
               <p className="text-gray-300 mb-6">
-                Entwicklung einer kompletten CI/CD-Pipeline, die eine React-Webanwendung von einem Git-Repository mittels FluxCD auf AWS vollautomatisch bereitstellt.
+                Entwicklung einer kompletten CI/CD-Pipeline, die eine React-Webanwendung mittels FluxCD vollautomatisch von einem Git-Repository auf AWS bereitstellt.
               </p>
 
               <ul className="space-y-3 mb-6 text-gray-300">
-                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Automatisierte Builds:</strong> Github Actions für Testing und Docker-Image Erstellung.</span></li>
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Automatisierte Builds:</strong> GitHub Actions für Testing und Docker-Image Erstellung.</span></li>
                  <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Infrastructure as Code:</strong> Terraform für die Bereitstellung der AWS-Ressourcen.</span></li>
                  <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Cluster-Setup:</strong> Ansible für die schnelle Konfiguration eines K3s Kubernetes-Clusters.</span></li>
                  <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>GitOps-Workflow:</strong> FluxCD rollt neue Versionen nach einem Push in unter einer Minute live aus.</span></li>
-                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Sicherheit & Komfort:</strong> Automatisches SSL-Zertifikatsmanagement inklusive mittels Cert-Manager.</span></li>
-                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Loadbalancing & Ingress:</strong> AWS Loadbalancer für Kubernetes Control Plane und HaProxyIngress für optimale Ressourcen-Nutzung.</span></li>
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Sicherheit & Komfort:</strong> Inklusive automatischem SSL-Zertifikatsmanagement mittels Cert-Manager.</span></li>
+                 <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Loadbalancing & Ingress:</strong> AWS Load-Balancer für die Kubernetes Control Plane und HAProxy Ingress für optimale Ressourcennutzung.</span></li>
                  <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Verfügbarkeit & Skalierung:</strong> Konzipiert für High Availability und einfache Skalierung der Workloads.</span></li>
               </ul>
               
