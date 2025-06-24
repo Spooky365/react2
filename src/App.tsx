@@ -226,9 +226,8 @@ function App() {
             </h1>
             
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
-              Ich bin Ihr spezialisierter IT-Freelancer für Linux-Server-Administration, 
-              Cloud & DevOps-Infrastruktur und Automatisierung. Lassen Sie uns Ihre IT-Systeme 
-              auf das nächste Level bringen.
+              Ich bin Ihr spezialisierter IT-Freelancer für Linux, Cloud & DevOps-Infrastruktur
+	      Lassen Sie uns Ihre IT-Systeme auf das nächste Level bringen.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
@@ -516,7 +515,7 @@ function App() {
                     disabled={formStatus === 'sending'}
                     className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {formStatus === 'sending' ? 'Wird gesendet...' : 'Nachricht senden'}
+                    {formStatus === 'sending' ? 'Wird gesendet...' : 'Nachricht senden (verschlüsselt)'}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </button>
 
