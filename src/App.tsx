@@ -499,7 +499,7 @@ function App() {
                 {/* The visible hCaptcha component */}
                 <div className="flex justify-center">
                    <HCaptcha
-                     sitekey="YOUR_HCAPTCHA_SITEKEY_HERE" // <-- IMPORTANT: Replace with your actual Sitekey
+                     sitekey="6deca056-c39a-49a2-897c-cf467d7c521c"
                      onVerify={(verifiedToken) => {
                        setToken(verifiedToken);
                        setFormStatus(''); // Clear any previous captcha error message
