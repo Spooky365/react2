@@ -6,9 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Falk Solutions - IT </title>
     <meta name="description" content="Professionelle DevOps-Beratung, Linux-Server-Administration und IT-Infrastruktur-Services von Falk Solutions. Ihr zuverlässiger Partner für moderne Technologielösungen." />
+
+    <!-- ADDED: Custom CSS animations for your components -->
+    <style>
+      .animate-spin-custom {
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .shine-animated {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .shine-animated::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -150%; 
+        width: 75%; 
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.35) 50%, /* Shine intensity */
+          rgba(255, 255, 255, 0) 100%
+        );
+        transform: skewX(-25deg); /* Angled shine */
+        animation: shine-pass 3s infinite linear;
+      }
+
+      @keyframes shine-pass {
+        0% { left: -125%; }
+        100% { left: 125%; }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <!-- This is your project's correct entry point -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
