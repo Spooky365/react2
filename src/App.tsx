@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 
 import DeploymentPipeline from './components/DeploymentPipeline'; 
-
+import { R3FSceneCube } from './components/MasterCube.tsx';
 const APP_VERSION = "v1.1.6";
 
 const ObfuscatedEmail = ({ user, domain }) => {
@@ -19,21 +19,17 @@ const ObfuscatedEmail = ({ user, domain }) => {
   if (!email) {
     return <span>[E-Mail wird geladen...]</span>;
   }
-  // [ACCENT] Changed from cyan to lime
   return <a href={`mailto:${email}`} className="text-lime-400 hover:underline">{email}</a>;
 };
 
 const ImpressumPage = ({ onBack }) => {
   return (
-    // [COMPONENT] Removed redundant background class
     <main className="text-gray-300">
       <div className="max-w-4xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
-        {/* [ACCENT] Changed from cyan to lime */}
         <button onClick={onBack} className="inline-flex items-center mb-12 text-lime-400 hover:text-lime-300 transition-colors group">
           <ArrowLeft className="h-5 w-5 mr-2 transition-transform group-hover:-translate-x-1" />
           Zurück zur Hauptseite
         </button>
-        {/* [COMPONENT] Changed card background and border from slate to gray */}
         <div className="bg-gray-950/80 backdrop-blur-sm border border-gray-800 rounded-xl p-8 md:p-12 space-y-8">
           <h1 className="text-4xl font-bold text-white">Impressum</h1>
           <div>
@@ -67,15 +63,12 @@ const ImpressumPage = ({ onBack }) => {
 
 const DatenschutzerklaerungPage = ({ onBack }) => {
   return (
-    // [COMPONENT] Removed redundant background class
     <main className="text-gray-300">
       <div className="max-w-4xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
-        {/* [ACCENT] Changed from cyan to lime */}
         <button onClick={onBack} className="inline-flex items-center mb-12 text-lime-400 hover:text-lime-300 transition-colors group">
           <ArrowLeft className="h-5 w-5 mr-2 transition-transform group-hover:-translate-x-1" />
           Zurück zur Hauptseite
         </button>
-        {/* [COMPONENT] Changed card background and border from slate to gray */}
         <div className="bg-gray-950/80 backdrop-blur-sm border border-gray-800 rounded-xl p-8 md:p-12 space-y-8">
           <h1 className="text-4xl font-bold text-white">Datenschutzerklärung</h1>
           <p><strong>Stand:</strong> {new Date().toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
@@ -198,20 +191,16 @@ function App() {
   ];
 
   return (
-    // [BACKGROUND] & [SELECTION] Changed main background and text selection colors
     <div className="min-h-screen bg-black text-white selection:bg-lime-500 selection:text-black">
-      {/* [BACKGROUND] & [BORDER] Changed nav background and border */}
       <nav className="fixed top-0 left-0 right-0 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800 z-50">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
             <button onClick={() => switchView('main')} className="flex items-center space-x-2 cursor-pointer">
-              {/* [ACCENT] Changed icon color from cyan to lime */}
               <Terminal className="h-6 w-6 text-lime-400" />
               <span className="text-lg font-bold text-white">Falk Solutions</span>
             </button>
             <div className="hidden md:flex items-center space-x-8">
               {['home', 'services', 'about', 'projects', 'contact'].map((item) => (
-                // [ACCENT] Changed active link color from cyan to lime
                 <a key={item} href={`#${item}`} onClick={(e) => { e.preventDefault(); scrollToSection(item); }} className={`text-sm font-medium transition-colors ${activeSection === item && view === 'main' ? 'text-lime-400' : 'text-gray-300 hover:text-white'}`}>
                   {item === 'home' ? 'Start' : item === 'services' ? 'Leistungen' : item === 'about' ? 'Über mich' : item === 'projects' ? 'Projekte' : 'Kontakt'}
                 </a>
@@ -222,7 +211,6 @@ function App() {
             </div>
           </div>
         </div>
-        {/* [BACKGROUND] & [BORDER] Changed mobile menu background and border */}
         {isMenuOpen && (<div className="md:hidden bg-gray-900/95 backdrop-blur-sm border-t border-gray-800"><div className="px-2 pt-2 pb-3 space-y-1">{['home', 'services', 'about', 'projects', 'contact'].map((item) => (<a key={item} href={`#${item}`} onClick={(e) => { e.preventDefault(); scrollToSection(item); }} className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md w-full text-left">{item === 'home' ? 'Start' : item === 'services' ? 'Leistungen' : item === 'about' ? 'Über mich' : item === 'projects' ? 'Projekte' : 'Kontakt'}</a>))}</div></div>)}
       </nav>
 
@@ -231,39 +219,49 @@ function App() {
       
       {view === 'main' && (
         <main>
+          {/* === THIS IS THE ONLY SECTION THAT HAS BEEN MODIFIED === */}
           <section id="home" className="pt-20 pb-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
-              <div className="text-center">
-                {/* [ACCENT] Changed badge colors from cyan to lime */}
-                <div className="inline-flex items-center px-4 py-2 bg-lime-500/10 border border-lime-500/20 rounded-full text-lime-400 text-sm font-medium mb-8">
-                  <Zap className="h-4 w-4 mr-2" />
-                  Professionelle DevOps-Lösungen
+              {/* This flex container creates the responsive side-by-side layout */}
+              <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16">
+
+                {/* Left side: All your original text content */}
+                <div className="flex-1 text-center lg:text-left">
+                  <div className="inline-flex items-center px-4 py-2 bg-lime-500/10 border border-lime-500/20 rounded-full text-lime-400 text-sm font-medium mb-8">
+                    <Zap className="h-4 w-4 mr-2" />
+                    Professionelle DevOps-Lösungen
+                  </div>
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+                    Moderne IT-Infrastruktur
+                    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-500">für Ihr Unternehmen</span>
+                  </h1>
+                  <p className="text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 mb-10">
+                    Ich bin Ihr spezialisierter IT-Freelancer für Linux, Cloud & DevOps-Infrastruktur.
+                    Lassen Sie uns Ihre IT-Systeme auf das nächste Level bringen.
+                  </p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6">
+                    <button onClick={() => scrollToSection('contact')} className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-lime-500 to-green-600 text-white font-semibold rounded-lg hover:from-lime-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
+                      Projekt besprechen
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </button>
+                    <button onClick={() => scrollToSection('projects')} className="inline-flex items-center px-8 py-4 bg-gray-900/80 text-white font-semibold rounded-lg hover:bg-gray-800 transition-all border border-gray-700">
+                      Projekt-Highlight
+                    </button>
+                  </div>
                 </div>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-                  Moderne IT-Infrastruktur
-                  {/* [GRADIENT] Changed text gradient from cyan/blue to lime/green */}
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-500">für Ihr Unternehmen</span>
-                </h1>
-                <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
-                  Ich bin Ihr spezialisierter IT-Freelancer für Linux, Cloud & DevOps-Infrastruktur.
-                  Lassen Sie uns Ihre IT-Systeme auf das nächste Level bringen.
-                </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                  {/* [GRADIENT] Changed button gradient from cyan/blue to lime/green */}
-                  <button onClick={() => scrollToSection('contact')} className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-lime-500 to-green-600 text-white font-semibold rounded-lg hover:from-lime-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
-                    Projekt besprechen
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </button>
-                  {/* [COMPONENT] Changed secondary button colors from slate to gray */}
-                  <button onClick={() => scrollToSection('projects')} className="inline-flex items-center px-8 py-4 bg-gray-900/80 text-white font-semibold rounded-lg hover:bg-gray-800 transition-all border border-gray-700">
-                    Projekt-Highlight
-                  </button>
+
+                {/* Right side: The 3D Cube */}
+                <div className="flex-1 w-full max-w-sm lg:max-w-md xl:max-w-lg">
+                  <div className="aspect-square">
+                    <R3FSceneCube />
+                  </div>
                 </div>
+
               </div>
             </div>
           </section>
 
-          {/* [BACKGROUND] Changed section background from slate to gray */}
+          {/* === ALL THE FOLLOWING SECTIONS ARE IDENTICAL TO YOUR ORIGINAL FILE === */}
           <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-950/50">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16">
@@ -272,9 +270,7 @@ function App() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {services.map((service, index) => (
-                  // [COMPONENT] & [ACCENT] Changed card colors from slate to gray and hover border to lime
                   <div key={index} className="bg-gray-950/80 backdrop-blur-sm border border-gray-800 rounded-xl p-8 hover:border-lime-500/50 transition-all hover:transform hover:scale-105 group">
-                    {/* [ACCENT] Changed icon color from cyan to lime */}
                     <div className="text-lime-400 mb-6 group-hover:text-lime-300 transition-colors">{service.icon}</div>
                     <h3 className="text-xl font-bold text-white mb-4">{service.title}</h3>
                     <p className="text-gray-300 mb-6">{service.description}</p>
@@ -295,12 +291,10 @@ function App() {
                     <p>Ich arbeite mit modernsten Technologien und Tools, um Ihnen robuste, skalierbare und sichere IT-Lösungen zu bieten. Dabei lege ich großen Wert auf Kommunikation, Zuverlässigkeit und kontinuierliche Verbesserung.</p>
                   </div>
                   <div className="mt-8 grid grid-cols-2 gap-6">
-                    {/* [COMPONENT] & [ACCENT] Changed card colors and text accent */}
                     <div className="bg-gray-950/50 rounded-lg p-4 border border-gray-800 transition-all hover:transform hover:scale-105 hover:border-lime-500/50"><div className="flex items-center text-2xl font-bold text-lime-400 mb-1">24/7<Phone className="ml-2 h-6 w-6" /></div><div className="text-sm text-gray-400">erreichbar</div></div>
                     <div className="bg-gray-950/50 rounded-lg p-4 border border-gray-800 transition-all hover:transform hover:scale-105 hover:border-lime-500/50"><div className="flex items-center text-2xl font-bold text-lime-400 mb-1">100 %<Smile className="ml-2 h-6 w-6" /></div><div className="text-sm text-gray-400">kundenorientiert</div></div>
                   </div>
                 </div>
-                {/* [COMPONENT] & [ACCENT] Changed card colors and icon accent */}
                 <div className="bg-gray-950/50 rounded-xl p-8 border border-gray-800 transition-all hover:transform hover:scale-105 hover:border-lime-500/50">
                   <h3 className="text-xl font-bold text-white mb-6">Expertise</h3>
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
@@ -311,7 +305,6 @@ function App() {
             </div>
           </section>
           
-          {/* [BACKGROUND] Changed section background from slate to gray */}
           <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-950/50">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-8">
@@ -319,7 +312,6 @@ function App() {
               	<p className="text-xl text-gray-300 max-w-2xl mx-auto">Einblick in eine vollautomatisierte CI/CD-Pipeline von der Entwicklung bis zum Live-System.</p>
 		          </div>
               <div className="flex justify-center">
-                {/* [COMPONENT] & [ACCENT] Changed card colors from slate to gray and hover border to lime */}
                 <div className="max-w-4xl w-full bg-gray-950/80 backdrop-blur-sm border border-gray-800 rounded-xl p-8 hover:border-lime-500/50 transition-all hover:transform hover:scale-105">
                   <h3 className="text-2xl font-bold text-white mb-4">Projekt-Highlight: Vollautomatisierte CI/CD-Pipeline</h3>
                   <p className="text-gray-300 mb-6">Entwicklung einer kompletten CI/CD-Pipeline, die eine React-Webanwendung mittels FluxCD vollautomatisch von einem Git-Repository auf AWS bereitstellt.</p>
@@ -332,9 +324,7 @@ function App() {
                      <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Loadbalancing & Ingress:</strong> AWS Load-Balancer für die Kubernetes Control Plane und HAProxy Ingress für optimale Ressourcennutzung.</span></li>
                      <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Verfügbarkeit & Skalierung:</strong> Konzipiert für High Availability und einfache Skalierung der Workloads.</span></li>
                   </ul>
-                  {/* [ACCENT] Changed tech tags from cyan to lime */}
                   <div className="flex flex-wrap gap-2 mb-6">{['React', 'GitHub Actions', 'FluxCD', 'Terraform', 'Ansible', 'K3s', 'AWS'].map((tech) => (<span key={tech} className="px-3 py-1 bg-lime-500/10 text-lime-400 text-xs rounded-full border border-lime-500/20">{tech}</span>))}</div>
-                  {/* [COMPONENT] Changed result box colors from slate to gray */}
                   <div className="bg-gray-900 p-4 rounded-lg border border-gray-700"><p className="text-green-400 font-semibold text-center">Resultat: Deployment von Zero-to-Live in wenigen Minuten und vollautomatisierte Updates.</p></div>
                 </div>
               </div>
@@ -343,8 +333,7 @@ function App() {
               <DeploymentPipeline />
             </div>
           </section>
-          
-          {/* [BACKGROUND] Changed section background from slate to gray */}
+
           <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-950/50">
              <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16">
@@ -352,12 +341,10 @@ function App() {
                 <p className="text-xl text-gray-300 max-w-2xl mx-auto">Bereit für Ihr nächstes Projekt? Lassen Sie uns sprechen.</p>
               </div>
               <div className="flex justify-center">
-                {/* [COMPONENT] Changed card colors from slate to gray */}
                 <div className="bg-gray-950/80 backdrop-blur-sm border border-gray-800 rounded-xl p-8 w-full max-w-xl">
                   <form onSubmit={handleFormSubmit} className="space-y-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Name</label>
-                      {/* [INPUT] Changed input colors and focus ring */}
                       <input type="text" id="name" name="name" required value={formData.name} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-lime-500 focus:ring-1 focus:ring-lime-500" placeholder="Ihr Name" />
                     </div>
                     <div>
@@ -378,7 +365,6 @@ function App() {
                        <HCaptcha sitekey="6deca056-c39a-49a2-897c-cf467d7c521c" onVerify={(verifiedToken) => { setToken(verifiedToken); setFormStatus(''); }} onExpire={() => setToken(null)} ref={captchaRef} theme="dark" />
                     </div>
                     <div>
-                      {/* [GRADIENT] Changed button gradient from cyan/blue to lime/green */}
                       <button type="submit" disabled={formStatus === 'sending'} className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-lime-500 to-green-600 text-white font-semibold rounded-lg hover:from-lime-600 hover:to-green-700 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
                         {formStatus === 'sending' ? 'Wird gesendet...' : 'Nachricht senden (verschlüsselt)'}
                         <ArrowRight className="ml-2 h-5 w-5" />
@@ -395,12 +381,10 @@ function App() {
         </main>
       )}
 
-      {/* [BORDER] Changed footer border color */}
       <footer className="py-8 px-4 sm:px-6 lg:px-8 border-t border-gray-800">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <button onClick={() => switchView('main')} className="flex items-center space-x-2 cursor-pointer">
-              {/* [ACCENT] Changed icon color from cyan to lime */}
               <Terminal className="h-6 w-6 text-lime-400" />
               <span className="text-lg font-bold text-white">Falk Solutions</span>
             </button>
