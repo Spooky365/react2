@@ -26,6 +26,7 @@ jobs:
           images: skoopy365/react2
           tags: |
             type=raw,value={{date 'YYYYMMDD-HHmmss'}}
+            type=raw,value=latest
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v2
