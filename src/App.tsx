@@ -1,187 +1,91 @@
 import React, { useState, useEffect, useRef } from 'react';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import { 
-  Server, Cloud, Code, CheckCircle, Menu, X, ArrowRight, Terminal, Zap, Globe, 
-  Lock, Cpu, HardDrive, GitFork, Power, TrendingUp, Smile, Phone, ArrowLeft 
+import {
+  Server, Cloud, Code, CheckCircle, Menu, X, ArrowRight, Terminal, Zap, Globe,
+  Lock, Cpu, HardDrive, GitFork, Power, TrendingUp, Smile, Phone
+  // ArrowLeft is used in the ImpressumPage and DatenschutzerklaerungPage,
+  // it's not strictly needed here if not used in main App.tsx directly,
+  // but keeping it in the lucide-react import is fine.
 } from 'lucide-react';
 
-import DeploymentPipeline from './components/DeploymentPipeline'; 
-import { R3FSceneCube } from './components/MasterCube.tsx';
+import DeploymentPipeline from './components/DeploymentPipeline';
+import { R3FSceneCube } from './components/MasterCube.tsx'; 
+
+// Import the newly separated components
+import ImpressumPage from './components/ImpressumPage';
+import DatenschutzerklaerungPage from './components/DatenschutzerklaerungPage';
+
 const APP_VERSION = "v1.1.6";
-
-const ObfuscatedEmail = ({ user, domain }) => {
-  const [email, setEmail] = useState('');
-
-  useEffect(() => {
-    setEmail(`${user}@${domain}`);
-  }, [user, domain]);
-
-  if (!email) {
-    return <span>[E-Mail wird geladen...]</span>;
-  }
-  return <a href={`mailto:${email}`} className="text-lime-400 hover:underline">{email}</a>;
-};
-
-const ImpressumPage = ({ onBack }) => {
-  return (
-    <main className="text-gray-300">
-      <div className="max-w-4xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
-        <button onClick={onBack} className="inline-flex items-center mb-12 text-lime-400 hover:text-lime-300 transition-colors group">
-          <ArrowLeft className="h-5 w-5 mr-2 transition-transform group-hover:-translate-x-1" />
-          Zurück zur Hauptseite
-        </button>
-        <div className="bg-gray-950/80 backdrop-blur-sm border border-gray-800 rounded-xl p-8 md:p-12 space-y-8">
-          <h1 className="text-4xl font-bold text-white">Impressum</h1>
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-3">Angaben gemäß § 5 TMG</h2>
-            <p className="leading-relaxed">FALK SOLUTIONS LLC<br />30 N Gould St Ste R<br />Sheridan, WY, 82801, USA</p>
-            <p className="mt-2"><strong>Rechtsform:</strong> Limited Liability Company (LLC)</p>
-          </div>
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-3">Kontakt</h2>
-            <p><strong>E-Mail:</strong> <ObfuscatedEmail user="kontakt" domain="falksolutions.net" /></p>
-          </div>
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-3">Registereintrag</h2>
-            <p>Eingetragen im Handelsregister des Staates Wyoming</p>
-            <p><strong>Registerführende Behörde:</strong> Wyoming Secretary of State</p>
-            <p><strong>File Number (Registernummer):</strong> 2024-001509709</p>
-          </div>
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-3">Umsatzsteuer</h2>
-            <p className="leading-relaxed">Als US-amerikanisches Unternehmen ohne Niederlassung in der Europäischen Union unterliegen unsere Dienstleistungen nicht der deutschen Umsatzsteuer. Bei Geschäften mit anderen Unternehmen in der EU findet ggf. das Reverse-Charge-Verfahren Anwendung.</p>
-          </div>
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-3">Verbraucherstreitbeilegung/Universalschlichtungsstelle</h2>
-            <p className="leading-relaxed">Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
-          </div>
-        </div>
-      </div>
-    </main>
-  );
-};
-
-const DatenschutzerklaerungPage = ({ onBack }) => {
-  return (
-    <main className="text-gray-300">
-      <div className="max-w-4xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
-        <button onClick={onBack} className="inline-flex items-center mb-12 text-lime-400 hover:text-lime-300 transition-colors group">
-          <ArrowLeft className="h-5 w-5 mr-2 transition-transform group-hover:-translate-x-1" />
-          Zurück zur Hauptseite
-        </button>
-        <div className="bg-gray-950/80 backdrop-blur-sm border border-gray-800 rounded-xl p-8 md:p-12 space-y-8">
-          <h1 className="text-4xl font-bold text-white">Datenschutzerklärung</h1>
-          <p><strong>Stand:</strong> {new Date().toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-3">1. Verantwortlicher</h2>
-            <p className="leading-relaxed">
-              Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:<br /><br />
-              <strong>Falk Solutions, LLC</strong><br />
-              30 N Gould St Ste R<br />
-              Sheridan, WY, 82801, USA<br /><br />
-              <strong>E-Mail:</strong> <ObfuscatedEmail user="kontakt" domain="falksolutions.net" />
-            </p>
-          </div>
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-3">2. Ihre Rechte als betroffene Person</h2>
-            <p className="leading-relaxed">Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Widerspruch gegen die Verarbeitung, Datenübertragbarkeit und das Recht, sich bei einer Aufsichtsbehörde zu beschweren. Sie können Einwilligungen jederzeit mit Wirkung für die Zukunft widerrufen.</p>
-          </div>
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-3">3. Datenverarbeitung auf unserer Website</h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-2">a) Hosting und Server-Log-Dateien</h3>
-                <p className="leading-relaxed">Unser Hostinganbieter erhebt bei jedem Zugriff auf die Website Daten in sog. Server-Log-Dateien. Dazu gehören Ihre IP-Adresse, Browsertyp, Betriebssystem, Referrer URL und Uhrzeit. Diese Verarbeitung dient unserem berechtigten Interesse an einer sicheren und effizienten Bereitstellung der Website (Art. 6 Abs. 1 lit. f DSGVO). Die Daten werden nach kurzer Zeit gelöscht.</p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-2">b) Kontaktformular</h3>
-                <p className="leading-relaxed">Bei Nutzung des Kontaktformulars verarbeiten wir Ihre eingegebenen Daten (Name, E-Mail, etc.) zur Bearbeitung Ihrer Anfrage. Dies geschieht zur Durchführung vorvertraglicher Maßnahmen oder zur Erfüllung eines Vertrags (Art. 6 Abs. 1 lit. b DSGVO) bzw. auf Basis unseres berechtigten Interesses an einer effektiven Kommunikation (Art. 6 Abs. 1 lit. f DSGVO). Ihre Daten werden nach Abschluss der Bearbeitung gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-2">c) hCaptcha</h3>
-                <p className="leading-relaxed">Wir nutzen hCaptcha (Anbieter: Intuition Machines, Inc., USA) zum Schutz vor Spam. Dabei werden Daten wie Ihre IP-Adresse und Ihr Nutzerverhalten an Server in den USA übertragen. Die USA gelten als Drittland mit einem potenziell geringeren Datenschutzniveau. Die Rechtsgrundlage ist unser berechtigtes Interesse am Schutz unserer Website (Art. 6 Abs. 1 lit. f DSGVO). Die Datenübermittlung stützt sich auf Standardvertragsklauseln der EU-Kommission.</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-3">4. SSL/TLS-Verschlüsselung</h2>
-            <p className="leading-relaxed">Diese Seite nutzt aus Sicherheitsgründen eine SSL/TLS-Verschlüsselung, erkennbar am "https://" in der Adresszeile und am Schloss-Symbol.</p>
-          </div>
-        </div>
-      </div>
-    </main>
-  );
-};
-
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [view, setView] = useState('main');
+  const [view, setView] = useState('main'); // 'main', 'impressum', 'datenschutz'
 
   const [formData, setFormData] = useState({ name: '', email: '', project: 'Linux Server Setup', message: '' });
   const [formStatus, setFormStatus] = useState('');
   const [token, setToken] = useState(null);
   const captchaRef = useRef(null);
-  
-  const handleInputChange = (e) => { 
-    const { name, value } = e.target; 
-    setFormData((prev) => ({ ...prev, [name]: value })); 
-  };
-  
-  const handleFormSubmit = async (e) => {
-    e.preventDefault(); 
-    if (!token) { setFormStatus('captcha_error'); return; } 
-    setFormStatus('sending'); 
-    try { 
-      const response = await fetch('/api/send-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...formData, "h-captcha-token": token }) });
-      captchaRef.current.resetCaptcha(); 
-      setToken(null); 
-      if (response.ok) { 
-        setFormStatus('success'); 
-        setFormData({ name: '', email: '', project: 'Linux Server Setup', message: '' }); 
-      } else { 
-        setFormStatus('error'); 
-      } 
-    } catch (error) { 
-      console.error('Submission error:', error); 
-      setFormStatus('error'); 
-      captchaRef.current.resetCaptcha(); 
-      setToken(null); 
-    } 
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  useEffect(() => { 
-    if (view === 'main') { 
-      const observer = new IntersectionObserver((entries) => { 
-        entries.forEach((entry) => { 
-          if (entry.isIntersecting) { 
-            setActiveSection(entry.target.id); 
-          } 
-        }); 
-      }, { rootMargin: '-50% 0px -50% 0px' });
-      const sections = document.querySelectorAll('section[id]'); 
-      sections.forEach((section) => observer.observe(section)); 
-      return () => sections.forEach((section) => observer.unobserve(section)); 
-    } 
-  }, [view]);
-  
-  const scrollToSection = (sectionId) => { 
-    if (view !== 'main') { 
-      setView('main'); 
-      setTimeout(() => { 
-        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }); 
-      }, 100); 
-    } else { 
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }); 
-    } 
-    setIsMenuOpen(false); 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    if (!token) { setFormStatus('captcha_error'); return; }
+    setFormStatus('sending');
+    try {
+      const response = await fetch('/api/send-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...formData, "h-captcha-token": token }) });
+      captchaRef.current.resetCaptcha();
+      setToken(null);
+      if (response.ok) {
+        setFormStatus('success');
+        setFormData({ name: '', email: '', project: 'Linux Server Setup', message: '' });
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      setFormStatus('error');
+      captchaRef.current.resetCaptcha();
+      setToken(null);
+    }
   };
-  
+
+  useEffect(() => {
+    if (view === 'main') {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      }, { rootMargin: '-50% 0px -50% 0px' });
+      const sections = document.querySelectorAll('section[id]');
+      sections.forEach((section) => observer.observe(section));
+      return () => sections.forEach((section) => observer.unobserve(section));
+    }
+    // Cleanup activeSection when navigating away from 'main' view
+    return () => setActiveSection('');
+  }, [view]);
+
+  const scrollToSection = (sectionId) => {
+    if (view !== 'main') {
+      setView('main');
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
   const switchView = (newView) => {
     setView(newView);
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); // Scroll to top when switching views
   };
 
   const services = [
@@ -201,7 +105,12 @@ function App() {
             </button>
             <div className="hidden md:flex items-center space-x-8">
               {['home', 'services', 'about', 'projects', 'contact'].map((item) => (
-                <a key={item} href={`#${item}`} onClick={(e) => { e.preventDefault(); scrollToSection(item); }} className={`text-sm font-medium transition-colors ${activeSection === item && view === 'main' ? 'text-lime-400' : 'text-gray-300 hover:text-white'}`}>
+                <a
+                  key={item}
+                  href={`#${item}`}
+                  onClick={(e) => { e.preventDefault(); scrollToSection(item); }}
+                  className={`text-sm font-medium transition-colors ${activeSection === item && view === 'main' ? 'text-lime-400' : 'text-gray-300 hover:text-white'}`}
+                >
                   {item === 'home' ? 'Start' : item === 'services' ? 'Leistungen' : item === 'about' ? 'Über mich' : item === 'projects' ? 'Projekte' : 'Kontakt'}
                 </a>
               ))}
@@ -211,12 +120,29 @@ function App() {
             </div>
           </div>
         </div>
-        {isMenuOpen && (<div className="md:hidden bg-gray-900/95 backdrop-blur-sm border-t border-gray-800"><div className="px-2 pt-2 pb-3 space-y-1">{['home', 'services', 'about', 'projects', 'contact'].map((item) => (<a key={item} href={`#${item}`} onClick={(e) => { e.preventDefault(); scrollToSection(item); }} className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md w-full text-left">{item === 'home' ? 'Start' : item === 'services' ? 'Leistungen' : item === 'about' ? 'Über mich' : item === 'projects' ? 'Projekte' : 'Kontakt'}</a>))}</div></div>)}
+        {isMenuOpen && (
+          <div className="md:hidden bg-gray-900/95 backdrop-blur-sm border-t border-gray-800">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {['home', 'services', 'about', 'projects', 'contact'].map((item) => (
+                <a
+                  key={item}
+                  href={`#${item}`}
+                  onClick={(e) => { e.preventDefault(); scrollToSection(item); }}
+                  className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md w-full text-left"
+                >
+                  {/* CORRECTED LINE: Added `item === 'projects' ?` */}
+                  {item === 'home' ? 'Start' : item === 'services' ? 'Leistungen' : item === 'about' ? 'Über mich' : item === 'projects' ? 'Projekte' : 'Kontakt'}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
+      {/* Render the separate pages based on view state */}
       {view === 'impressum' && <ImpressumPage onBack={() => switchView('main')} />}
       {view === 'datenschutz' && <DatenschutzerklaerungPage onBack={() => switchView('main')} />}
-      
+
       {view === 'main' && (
         <main>
           {/* === THIS IS THE ONLY SECTION THAT HAS BEEN MODIFIED === */}
@@ -251,7 +177,7 @@ function App() {
                 </div>
 
                 {/* Right side: The 3D Cube */}
-                <div className="flex-1 w-full max-w-sm lg:max-w-md xl:max-w-lg">
+                <div className="flex-1 w-full max-w-sm lg:max-w-md xl:max-w-lg ">
                   <div className="aspect-square">
                     <R3FSceneCube />
                   </div>
@@ -304,7 +230,7 @@ function App() {
               </div>
             </div>
           </section>
-          
+
           <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-950/50">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-8">
@@ -321,7 +247,7 @@ function App() {
                      <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Cluster-Setup:</strong> Ansible für die schnelle Konfiguration eines K3s Kubernetes-Clusters.</span></li>
                      <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>GitOps-Workflow:</strong> FluxCD rollt neue Versionen nach einem Push in unter einer Minute live aus.</span></li>
                      <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Sicherheit & Komfort:</strong> Inklusive automatischem SSL-Zertifikatsmanagement mittels Cert-Manager.</span></li>
-                     <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Loadbalancing & Ingress:</strong> AWS Load-Balancer für die Kubernetes Control Plane und HAProxy Ingress für optimale Ressourcennutzung.</span></li>
+                     <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Loadbalancing & Ingress:</strong> AWS Load-Balancer für the Kubernetes Control Plane and HAProxy Ingress for optimal resource utilization.</span></li>
                      <li className="flex items-start"><CheckCircle className="h-5 w-5 text-green-400 mr-3 mt-1 flex-shrink-0" /><span><strong>Verfügbarkeit & Skalierung:</strong> Konzipiert für High Availability und einfache Skalierung der Workloads.</span></li>
                   </ul>
                   <div className="flex flex-wrap gap-2 mb-6">{['React', 'GitHub Actions', 'FluxCD', 'Terraform', 'Ansible', 'K3s', 'AWS'].map((tech) => (<span key={tech} className="px-3 py-1 bg-lime-500/10 text-lime-400 text-xs rounded-full border border-lime-500/20">{tech}</span>))}</div>
@@ -404,5 +330,5 @@ function App() {
     </div>
   );
 }
- 
+
 export default App;
