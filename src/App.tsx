@@ -162,7 +162,7 @@ function App() {
                     <span className="block text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-500">für Ihr Unternehmen</span>
                   </h1>
                   <p className="text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 mb-10">
-                    Ich bin Ihr spezialisierter IT-Freelancer für Linux, Cloud & DevOps-Infrastruktur.
+                    Ich bin Ihr spezialisierter IT-Fachmann für Linux, Cloud & DevOps-Infrastruktur.
                     Lassen Sie uns Ihre IT-Systeme auf das nächste Level bringen.
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6">
